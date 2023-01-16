@@ -1,17 +1,14 @@
-ARG VPN-PORTAL_VERSION="1.0.0"
+MAINTAINER Skylark 
 
-FROM ubuntu:22.04
-LABEL Maintainer = Skylark 
+RUN apt update -y && apt upgrade -y
 
-RUN apt-get update -y
-
-RUN apt-get install -y \
+RUN apt install -y \
     gnome-keyring \
     xvfb \
     tzdata \
     openconnect
 
-RUN apt-get install -y \
+RUN apt install -y \
     python3-pip \
     python3-venv \
     python3-pyqt5 \
@@ -27,7 +24,7 @@ ENV HOME /home/robot
 ENV USER robot
 USER robot
 
-RUN echo 'PATH=/home/robot/.local/bin:$PATH' >>.bashrc
 RUN pip3 install --user pipx
 RUN /home/robot/.local/bin/pipx install "openconnect-sso[full]"
+RUN echo 'PATH=/home/robot/.local/bin:$PATH' >>.bashrc
 RUN echo pipx ensurepath >>.bashrc
